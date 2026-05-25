@@ -10,7 +10,7 @@ jobs:
   build:
     # macos-12 is deprecated/removed by GitHub Actions.
     # macos-13 is the correct Intel (x86_64) runner for a 2019 Mac.
-    runs-on: macos-13
+    runs-on: macos-14
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       MACOSX_DEPLOYMENT_TARGET: "12.0"
