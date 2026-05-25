@@ -1,0 +1,33 @@
+name: Build AviTab
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+    branches: [ "master", "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake build-essential libgl1-mesa-dev xorg-dev libcurl4-openssl-dev
+
+    - name: Configure CMake
+      run: cmake --preset release
+
+    - name: Build
+      run: cmake --build --preset release
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: avitab-build
+        path: install/
