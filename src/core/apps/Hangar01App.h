@@ -18,18 +18,35 @@
 #pragma once
 
 #include <memory>
+#include <vector>
+#include <string>
+#include <atomic>
 #include "App.h"
 #include "gui_toolkit/widgets/Window.h"
 #include "gui_toolkit/widgets/Label.h"
+#include "gui_toolkit/widgets/List.h"
 
 namespace avitab {
 
 class Hangar01App: public App {
 public:
     Hangar01App(FuncsPtr appFuncs);
+    ~Hangar01App() override;
+
 private:
     std::shared_ptr<Window> window;
     std::shared_ptr<Label> label;
+    std::shared_ptr<List> aircraftList;
+
+    struct Aircraft {
+        std::string model;
+        std::string slug;
+    };
+    std::vector<Aircraft> aircrafts;
+    std::atomic<bool> cancelHTTP;
+
+    void loadAircrafts();
+    void onAircraftSelected(int index);
 };
 
 } /* namespace avitab */
