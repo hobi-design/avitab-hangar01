@@ -24,21 +24,23 @@ We are integrating the HANGAR01 checklists into the X-Plane "AviTab" VR tablet.
 
 ---
 
-## API Reference Notes (Provided by User)
+## API Reference Notes (Provided by User verbatim)
+
+HANGAR01 Checklist Data — API Reference
 There is no custom REST endpoint. The data lives in Sanity CMS and is queried directly via the Sanity GROQ API. This is the same source the web app uses — no middleware, no auth for read access on the production dataset.
 
-### 1. Endpoints
-**To fetch all aircraft slugs (for discovery):**
-`GET https://3qw97t0o.api.sanity.io/v2023-05-03/data/query/production?query=*[_type=="aircraft"&&!comingSoon]{model,slug}`
+1. Endpoint
+GET https://3qw97t0o.api.sanity.io/v2023-05-03/data/query/production?query=<GROQ>
+To fetch a single aircraft's full checklist by slug (e.g. b737):
 
-**To fetch a single aircraft's full checklist by slug (e.g. b737):**
-`GET https://3qw97t0o.api.sanity.io/v2023-05-03/data/query/production?query=*[_type=="aircraft"&&slug.current==$slug][0]{model,slug,manufacturer,checklist}&$slug="b737"`
+https://3qw97t0o.api.sanity.io/v2023-05-03/data/query/production?query=*[_type=="aircraft"&&slug.current==$slug][0]{model,slug,manufacturer,checklist}&$slug="b737"
+To fetch all aircraft slugs (for discovery):
 
-### 2. Authentication
+https://3qw97t0o.api.sanity.io/v2023-05-03/data/query/production?query=*[_type=="aircraft"&&!comingSoon]{model,slug}
+2. Authentication
 None required. The production dataset is public read. No headers, no API key needed for GET requests.
 
-### 3. JSON Payload Shape (Single Checklist)
-```json
+3. JSON payload shape
 {
   "result": {
     "model": "Boeing 737 NG",
@@ -78,21 +80,20 @@ None required. The production dataset is public read. No headers, no API key nee
     ]
   }
 }
-```
+4. Data structure summary
+Field	Type	Notes
+model	string	Display name e.g. "Boeing 737 NG"
+slug.current	string	URL/ID key e.g. "b737"
+checklist[]	Phase[]	Top-level phases
+phase.title	string	e.g. "Preflight", "Engine Start"
+phase.groups[]	Group[]	Sub-groups within a phase
+group.title	string	e.g. "Cockpit Preparation"
+item.label	string	The checklist item name e.g. "Battery Switch"
+item.action	string	The expected action e.g. "ON", "SET", "CHECK"
+item.info	string?	Optional explanatory note
+item.tier	"quick" | "normal" | "full"	Filter items by detail level
+5. Available aircraft slugs
+Query this to get the current list:
 
-### 4. Data Structure Summary
-| Field | Type | Notes |
-| :--- | :--- | :--- |
-| `model` | string | Display name e.g. "Boeing 737 NG" |
-| `slug.current` | string | URL/ID key e.g. "b737" |
-| `checklist[]` | Phase[] | Top-level phases |
-| `phase.title` | string | e.g. "Preflight", "Engine Start" |
-| `phase.groups[]` | Group[] | Sub-groups within a phase |
-| `group.title` | string | e.g. "Cockpit Preparation" |
-| `item.label` | string | The checklist item name e.g. "Battery Switch" |
-| `item.action` | string | The expected action e.g. "ON", "SET", "CHECK" |
-| `item.info` | string? | Optional explanatory note |
-| `item.tier` | "quick" \| "normal" \| "full" | Filter items by detail level |
-
-### 5. Available Aircraft Slugs
-Known slugs currently in the dataset: `b737`, `a320`, `a310`, `a330`, `b747`, `b787`, `c208`, `cj4`, `hondajet`, `longitude`, `tbm930`
+https://3qw97t0o.api.sanity.io/v2023-05-03/data/query/production?query=*[_type=="aircraft"&&!comingSoon]{model,"slug":slug.current}
+Known slugs currently in the dataset: b737, a320, a310, a330, b747, b787, c208, cj4, hondajet, longitude, tbm930
