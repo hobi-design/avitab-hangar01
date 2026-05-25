@@ -65,8 +65,8 @@ void Hangar01App::loadAircrafts() {
             std::vector<Aircraft> parsed;
             for (const auto& item : results) {
                 Aircraft ac;
-                ac.model = item.value("model", "Unknown");
-                ac.slug = item.value("slug", "");
+                ac.model = item.value("model", std::string("Unknown"));
+                ac.slug = item.value("slug", std::string(""));
                 parsed.push_back(ac);
             }
 
