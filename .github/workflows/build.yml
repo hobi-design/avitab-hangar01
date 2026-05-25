@@ -8,6 +8,8 @@ on:
 
 jobs:
   build:
+    # macos-12 is deprecated/removed by GitHub Actions.
+    # macos-13 is the correct Intel (x86_64) runner for a 2019 Mac.
     runs-on: macos-13
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -19,7 +21,7 @@ jobs:
         submodules: recursive
 
     - name: Configure CMake
-      run: cmake --preset release
+      run: cmake --preset release -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 -DCMAKE_OSX_ARCHITECTURES=x86_64
 
     - name: Build
       run: cmake --build --preset release
