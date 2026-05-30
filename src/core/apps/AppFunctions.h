@@ -36,6 +36,7 @@ enum class AppId {
     NOTES,
     NAVIGRAPH,
     ABOUT,
+    HANGAR01,
 };
 
 class AppFunctions {

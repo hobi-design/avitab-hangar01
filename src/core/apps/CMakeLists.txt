@@ -14,6 +14,8 @@ target_sources(avitab_core_lib PRIVATE
     ChartsApp.h
     DocumentsApp.cpp
     DocumentsApp.h
+    Hangar01App.cpp
+    Hangar01App.h
     HeaderApp.cpp
     HeaderApp.h
     MapApp.cpp

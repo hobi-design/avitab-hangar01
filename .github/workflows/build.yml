@@ -1,0 +1,99 @@
+name: Build AviTab
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+    branches: [ "master", "main" ]
+
+jobs:
+  build-mac:
+    runs-on: macos-14
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      MACOSX_DEPLOYMENT_TARGET: "12.0"
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Configure CMake
+      run: cmake --preset release -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 -DCMAKE_OSX_ARCHITECTURES=x86_64
+
+    - name: Build
+      run: cmake --build --preset release
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: avitab-build-mac
+        path: install/
+
+  build-linux:
+    runs-on: ubuntu-22.04
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          build-essential cmake \
+          libgl1-mesa-dev libglu1-mesa-dev \
+          libx11-dev libxrandr-dev libxinerama-dev \
+          libxcursor-dev libxi-dev libxext-dev \
+          libwayland-dev libxkbcommon-dev wayland-protocols \
+          libfontconfig1-dev
+
+    - name: Configure CMake
+      run: cmake --preset release
+
+    - name: Build
+      run: cmake --build --preset release
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: avitab-build-linux
+        path: install/
+
+  build-windows:
+    runs-on: windows-2022
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Install MinGW
+      uses: msys2/setup-msys2@v2
+      with:
+        msystem: MINGW64
+        update: true
+        install: >-
+          mingw-w64-x86_64-gcc
+          mingw-w64-x86_64-cmake
+          mingw-w64-x86_64-ninja
+          mingw-w64-x86_64-mesa
+
+    - name: Configure CMake
+      shell: msys2 {0}
+      run: cmake --preset release
+
+    - name: Build
+      shell: msys2 {0}
+      run: cmake --build --preset release
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: avitab-build-windows
+        path: install/

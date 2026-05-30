@@ -1,52 +1,49 @@
-# AviTab - The Aviator's Tablet
+# AviTab + HANGAR01
 
-AviTab is a plugin for the [X-Plane](http://www.x-plane.com/) flight simulator (versions 11.20+ and 12). It displays a tablet like computer with a few apps in the cockpit and is mainly used for flying in virtual reality. But is also very handy in windowed mode, with integrations such as Zibo's B737-800X, it truly enhances the flight experience with a fully functioning EFB in the virtual cockpit.
+This is a fork of [AviTab](https://github.com/TeamAvitab/avitab) with an added HANGAR01 checklist app. It adds a "Hangar01" entry to the AviTab launcher that fetches interactive checklists from [hangar01.space](https://hangar01.space) directly in the tablet.
 
-![](docs/screenshots/launcher.jpg)
+For everything not related to the HANGAR01 app, refer to the [upstream AviTab documentation](https://github.com/TeamAvitab/avitab).
 
-## Purpose
-When flying in a simulator, one often needs to lookup details in PDF charts, plane manuals,
-checklists or other documents. Using a PDF reader breaks the immersion because the virtual aviator
-either has to take off of their HMD or use other tools that can move windows into VR.
-
-AviTab tries to solve this problem by offering a PDF reader inside a native plugin for X-Plane.
-Using a plugin also opens possibilites for more apps inside the tablet, for example to display information
-about the plane status or aid in navigation.
-
-## Features
-Let the screenshots speak! Note that these were taken using the standalone version for better resolution,
-but all of this is available right inside your VR cockpit.
-
-![](docs/screenshots/charts.jpg)
-![](docs/screenshots/map.jpg)
-![](docs/screenshots/airports.jpg)
-
-More screenshots [here](docs/screenshots/)
+---
 
 ## Installation
 
-* Download the latest release from the [release page](https://github.com/teamavitab/avitab/releases/latest)
-* Extract the archive and move the folder into your ``X-Plane/Resources/Plugins`` directory
-* Start X-Plane
-* Find a new menu inside the ``plugins`` directory to toggle the tablet
-* Optionally, you can assign a key for this command
+1. Download the latest build artifact for your platform from the [Actions tab](https://github.com/hobi-design/avitab-hangar01/actions).
+2. Locate your X-Plane installation directory. Inside it, navigate to `Resources/plugins/`.
+3. Copy the `Avitab` folder from the downloaded artifact into the `plugins` directory.
+   - If an existing AviTab installation is present, merge the folders rather than replacing them. At minimum, replace only the `Avitab.xpl` binary for your platform.
+4. Launch X-Plane. The HANGAR01 app will appear in the AviTab launcher.
 
-## Usage
+---
 
-### General
-When hovering over the edges of the tablet from a short distance, X-Plane will display green bars around the tablet.
-The _upper_ bar can be used to grab the window and move it around inside the cockpit.
+## Using the HANGAR01 app
 
-### Charts Viewer
-The charts viewer displays PDF files inside the ``charts/`` subdirectory of the ``plugin/`` directoy. You can add your
-charts there, including subdirectories.
+1. Open AviTab in X-Plane via the Plugins menu or your assigned key binding.
+2. Tap the Hangar01 icon in the launcher.
+3. Select an aircraft from the list. The checklist loads from the HANGAR01 API.
+4. Use the Quick / Normal / Full buttons to filter checklist items by detail level.
+5. Tap a checklist item to check it off. Items marked with (i) display an info note at the bottom of the screen when tapped.
+6. Tap the back arrow to return to the aircraft list.
 
-## Limitations
+---
 
-* PDFs containing [CJK fonts](https://en.wikipedia.org/wiki/List_of_CJK_fonts)
-  or ancient fonts such [Linear B](https://en.wikipedia.org/wiki/Linear_B) are not supported.
-  This is mainly due to font sizes - a version containing all fonts would be 40 Megabytes in size.
+## Building from source
 
-## Compiling
+See [BUILDING.md](docs/BUILDING.md) for full instructions.
 
-See [Compiling](https://github.com/teamavitab/avitab/wiki/Compiling) in the Wiki.
+The short version:
+
+```
+cmake --preset release
+cmake --build --preset release
+```
+
+The `install/` directory will contain the plugin package and a standalone desktop app for GUI testing without X-Plane.
+
+CI builds for macOS, Linux, and Windows run automatically on every push. Download artifacts from the [Actions tab](https://github.com/hobi-design/avitab-hangar01/actions).
+
+---
+
+## License
+
+[GNU Affero General Public License v3](https://www.gnu.org/licenses/agpl-3.0.html), inherited from the upstream AviTab project.
