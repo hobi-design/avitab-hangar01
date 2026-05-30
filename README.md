@@ -8,11 +8,26 @@ For everything not related to the HANGAR01 app, refer to the [upstream AviTab do
 
 ## Installation
 
-1. Download the zip for your platform from the [latest release](https://github.com/hobi-design/avitab-hangar01/releases/latest).
-2. Locate your X-Plane installation directory. Inside it, navigate to `Resources/plugins/`.
-3. Copy the `Avitab` folder from the downloaded artifact into the `plugins` directory.
-   - If an existing AviTab installation is present, merge the folders rather than replacing them. At minimum, replace only the `Avitab.xpl` binary for your platform.
-4. Launch X-Plane. The HANGAR01 app will appear in the AviTab launcher.
+The downloaded zip contains a folder named `Avitab` alongside `INSTALLATION.md` and `RELEASE_NOTES.md`.
+
+### New install
+
+1. Download the zip for your platform from the [latest release](https://github.com/hobi-design/avitab-hangar01/releases/latest) and extract it.
+2. Locate your X-Plane installation directory and navigate to `Resources/plugins/`.
+3. Copy the `Avitab` folder into `Resources/plugins/`.
+4. Launch X-Plane. The Hangar01 app appears in the AviTab launcher.
+
+### Updating an existing AviTab install
+
+This fork's only change is the compiled plugin binary, so the simplest and safest update is to replace just that one file:
+
+- macOS: `Resources/plugins/Avitab/mac_x64/Avitab.xpl`
+- Windows: `Resources/plugins/Avitab/win_x64/Avitab.xpl`
+- Linux: `Resources/plugins/Avitab/lin_x64/Avitab.xpl`
+
+Copy the matching `Avitab.xpl` from the zip over the existing one.
+
+Do not delete your existing `Avitab` folder and replace it wholesale, as that removes any charts you have added under `Avitab/charts/`. Your settings and preferences are not affected either way: they are stored separately and are not included in the package, so updating never resets them.
 
 ---
 

@@ -26,7 +26,7 @@ jobs:
       run: cmake --build --preset release
 
     - name: Zip
-      run: cd install/avitab && zip -r ../../avitab-mac.zip .
+      run: cd install/avitab/xplane && zip -r ../../../avitab-mac.zip .
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
@@ -62,7 +62,7 @@ jobs:
       run: cmake --build --preset release
 
     - name: Zip
-      run: cd install/avitab && zip -r ../../avitab-linux.zip .
+      run: cd install/avitab/xplane && zip -r ../../../avitab-linux.zip .
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
@@ -102,7 +102,7 @@ jobs:
 
     - name: Zip
       shell: msys2 {0}
-      run: cd install/avitab && zip -r ../../avitab-windows.zip .
+      run: cd install/avitab/xplane && zip -r ../../../avitab-windows.zip .
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
