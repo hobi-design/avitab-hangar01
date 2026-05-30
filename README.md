@@ -8,7 +8,7 @@ For everything not related to the HANGAR01 app, refer to the [upstream AviTab do
 
 ## Installation
 
-1. Download the latest build artifact for your platform from the [Actions tab](https://github.com/hobi-design/avitab-hangar01/actions).
+1. Download the zip for your platform from the [latest release](https://github.com/hobi-design/avitab-hangar01/releases/latest).
 2. Locate your X-Plane installation directory. Inside it, navigate to `Resources/plugins/`.
 3. Copy the `Avitab` folder from the downloaded artifact into the `plugins` directory.
    - If an existing AviTab installation is present, merge the folders rather than replacing them. At minimum, replace only the `Avitab.xpl` binary for your platform.
@@ -40,7 +40,7 @@ cmake --build --preset release
 
 The `install/` directory will contain the plugin package and a standalone desktop app for GUI testing without X-Plane.
 
-CI builds for macOS, Linux, and Windows run automatically on every push. Download artifacts from the [Actions tab](https://github.com/hobi-design/avitab-hangar01/actions).
+CI builds for macOS, Linux, and Windows run automatically on every push. Tagged releases (`v*`) publish zips to the [releases page](https://github.com/hobi-design/avitab-hangar01/releases).
 
 ---
 

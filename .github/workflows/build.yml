@@ -3,6 +3,7 @@ name: Build AviTab
 on:
   push:
     branches: [ "master", "main" ]
+    tags: [ "v*" ]
   pull_request:
     branches: [ "master", "main" ]
 
@@ -24,11 +25,14 @@ jobs:
     - name: Build
       run: cmake --build --preset release
 
+    - name: Zip
+      run: cd install && zip -r ../avitab-mac.zip Avitab
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: avitab-build-mac
-        path: install/
+        name: avitab-mac
+        path: avitab-mac.zip
 
   build-linux:
     runs-on: ubuntu-22.04
@@ -57,11 +61,14 @@ jobs:
     - name: Build
       run: cmake --build --preset release
 
+    - name: Zip
+      run: cd install && zip -r ../avitab-linux.zip Avitab
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: avitab-build-linux
-        path: install/
+        name: avitab-linux
+        path: avitab-linux.zip
 
   build-windows:
     runs-on: windows-2022
@@ -92,8 +99,31 @@ jobs:
       shell: msys2 {0}
       run: cmake --build --preset release
 
+    - name: Zip
+      shell: msys2 {0}
+      run: cd install && zip -r ../avitab-windows.zip Avitab
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: avitab-build-windows
-        path: install/
+        name: avitab-windows
+        path: avitab-windows.zip
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [ build-mac, build-linux, build-windows ]
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+
+    steps:
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+
+    - name: Create release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          avitab-mac/avitab-mac.zip
+          avitab-linux/avitab-linux.zip
+          avitab-windows/avitab-windows.zip
